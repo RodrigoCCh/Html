@@ -1,0 +1,144 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Amistad Especial 🌌</title>
+  <style>
+    /* Fondo espacial animado */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .card {
+      color: white;
+      text-align: center;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+      animation: fadeIn 3s ease-in-out;
+      max-width: 750px;
+    }
+
+    h1 {
+      font-size: 2.7em;
+      color: #ffb6ff;
+      text-shadow: 0 0 20px #ff77ff, 0 0 40px #ff00ff;
+      animation: glow 2s infinite alternate;
+    }
+
+    p {
+      font-size: 1.4em;
+      line-height: 1.8;
+      margin-top: 20px;
+      opacity: 0;
+      animation: slideUp 2s ease forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 15px #ff77ff, 0 0 30px #ff00ff; }
+      to { text-shadow: 0 0 30px #ffffff, 0 0 60px #ff00ff; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo de estrellas animado -->
+  <canvas id="stars"></canvas>
+
+  <div class="card">
+    <h1>🌠 Feliz 21 de septiembre 🌠</h1>
+    <p>
+      En este inmenso universo, lleno de millones de estrellas,  
+      tengo la suerte de que brille en mi vida la más especial: tu amistad.  
+      🌌 Gracias por estar, por iluminar mis días,  
+      porque tu amistad es lo mejor que tengo. 💖  
+    </p>
+  </div>
+
+  <script>
+    // Animación de estrellas más grandes y en todas direcciones
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.onresize = resize;
+    resize();
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1, // ⭐ estrellas más grandes
+          speedX: (Math.random() - 0.5) * 1.2, // movimiento horizontal más rápido
+          speedY: (Math.random() - 0.5) * 1.2  // movimiento vertical más rápido
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function updateStars() {
+      for (let star of stars) {
+        star.x += star.speedX;
+        star.y += star.speedY;
+
+        // reaparecen cuando salen de pantalla
+        if (star.x < 0) star.x = canvas.width;
+        if (star.x > canvas.width) star.x = 0;
+        if (star.y < 0) star.y = canvas.height;
+        if (star.y > canvas.height) star.y = 0;
+      }
+    }
+
+    function animate() {
+      drawStars();
+      updateStars();
+      requestAnimationFrame(animate);
+    }
+
+    createStars(350); // ⭐ un poco menos pero más grandes
+    animate();
+  </script>
+</body>
+</html>
